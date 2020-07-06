@@ -212,11 +212,13 @@ extension SelectContext on BuildContext {
     );
     ```
     ''');
-    assert(widget is LayoutBuilder || debugDoingBuild, '''
-Tried to use `context.select` outside of the `build` method of a widget.
+    //comment out for support flutter 1.12
+//     final debugDoingBuild = true;
+//     assert(widget is LayoutBuilder || debugDoingBuild, '''
+// Tried to use `context.select` outside of the `build` method of a widget.
 
-Any usage other than inside the `build` method of a widget are not supported.
-''');
+// Any usage other than inside the `build` method of a widget are not supported.
+// ''');
     final inheritedElement = Provider._inheritedElementOf<T>(this);
     try {
       var value = inheritedElement.value;
