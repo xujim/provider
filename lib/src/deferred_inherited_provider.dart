@@ -155,6 +155,7 @@ DeferredInheritedProvider(
   }
 }
 
+//TODO:什么是defered？
 class _CreateDeferredInheritedProvider<T, R> extends _DeferredDelegate<T, R> {
   _CreateDeferredInheritedProvider({
     @required this.create,
@@ -251,6 +252,7 @@ class _CreateDeferredInheritedProviderElement<T, R>
   }
 }
 
+//TODO：这里value又是什么意思？区别于对象吗？
 class _ValueDeferredInheritedProvider<T, R> extends _DeferredDelegate<T, R> {
   _ValueDeferredInheritedProvider(
     this.value,

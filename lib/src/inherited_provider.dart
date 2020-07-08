@@ -49,6 +49,7 @@ typedef StartListening<T> = VoidCallback Function(
 ///
 ///  - [DeferredInheritedProvider], a variant of this object where the provided
 ///    object and the created object are two different entity.
+/// TODO：这里inherited和InheritedWidget又有什么区别和联系？
 class InheritedProvider<T> extends SingleChildStatelessWidget {
   /// Creates a value, then expose it to its descendants.
   ///

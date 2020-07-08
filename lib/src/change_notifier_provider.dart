@@ -44,6 +44,7 @@ import 'proxy_provider.dart';
 ///
 ///   In such situation, your [ChangeNotifier] would never be updated when the
 ///   value changes.
+/// TODO：为什么？
 ///
 /// ```dart
 /// int count;
@@ -95,7 +96,7 @@ import 'proxy_provider.dart';
 ///     of variables from other providers.
 ///   * [ListenableProvider], similar to [ChangeNotifierProvider] but works with
 ///     any [Listenable].
-class ChangeNotifierProvider<T extends ChangeNotifier>
+class ChangeNotifierProvider<T extends ChangeNotifier>//ChangeNotifier是个ViewModel？不是，其内部管理的成员才算
     extends ListenableProvider<T> {
   static void _dispose(BuildContext context, ChangeNotifier notifier) {
     notifier?.dispose();
@@ -145,7 +146,7 @@ class ChangeNotifierProvider<T extends ChangeNotifier>
 /// ChangeNotifierProvider(
 ///   create: (context) {
 ///     return MyChangeNotifier(
-///       myModel: Provider.of<MyModel>(context, listen: false),
+///       myModel: Provider.of<MyModel>(context, listen: false),//ChangeNotifier不是Model，其内部管理的成员才算
 ///     );
 ///   },
 ///   child: ...

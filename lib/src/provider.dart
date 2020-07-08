@@ -43,7 +43,7 @@ part 'deferred_inherited_provider.dart';
 /// ```
 ///
 /// The widget tree representation of the two approaches are identical.
-class MultiProvider extends Nested {
+class MultiProvider extends Nested {//TODO：什么是nested？
   /// Build a tree of providers from a list of [SingleChildWidget].
   MultiProvider({
     Key key,
