@@ -385,7 +385,7 @@ class _InheritedProviderScopeElement<T> extends InheritedElement
   void performRebuild() {//负责重绘
     if (_firstBuild) {
       _firstBuild = false;
-      _delegateState = widget.owner._delegate.createState()..element = this;//_delegate是InheritedProvider中的
+      _delegateState = widget.owner._delegate.createState()..element = this;//_delegate是InheritedProvider中的，TODO: 用户存储state吗？
     }
     super.performRebuild();
   }
@@ -406,7 +406,7 @@ If you're in this situation, consider passing a `key` unique to each individual 
 
     _isBuildFromExternalSources = true;
     _updatedShouldNotify =
-        _delegateState.willUpdateDelegate(newWidget.owner._delegate);
+        _delegateState.willUpdateDelegate(newWidget.owner._delegate);//告知state应该更新, TODO: 但newWidget的delegate含有什么数据呢？
     super.update(newWidget);
     _updatedShouldNotify = false;
   }
@@ -756,7 +756,7 @@ class _ValueInheritedProvider<T> extends _Delegate<T> {
   _ValueInheritedProvider({
     @required this.value,
     UpdateShouldNotify<T> updateShouldNotify,
-    this.startListening,
+    this.startListening,//TODO：这是用来干嘛的？
   }) : _updateShouldNotify = updateShouldNotify;
 
   final T value;

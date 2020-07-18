@@ -150,7 +150,7 @@ class Provider<T> extends InheritedProvider<T> {
   /// Defaults to `(previous, next) => previous != next`.
   /// See [InheritedWidget.updateShouldNotify] for more information.
   /// {@endtemplate}
-  Provider.value({
+  Provider.value({//TODO：有何用？
     Key key,
     @required T value,
     UpdateShouldNotify<T> updateShouldNotify,
