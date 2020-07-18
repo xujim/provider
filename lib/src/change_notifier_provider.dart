@@ -215,7 +215,7 @@ class ChangeNotifierProxyProvider<T, R extends ChangeNotifier>
   ChangeNotifierProxyProvider({
     Key key,
     @required Create<R> create,
-    @required ProxyProviderBuilder<T, R> update,
+    @required ProxyProviderBuilder<T, R> update,//update的含义是根据当前T的数据来更新R
     bool lazy,
     TransitionBuilder builder,
     Widget child,
@@ -253,7 +253,7 @@ class ChangeNotifierProxyProvider0<R extends ChangeNotifier>
 }
 
 /// {@macro provider.changenotifierproxyprovider}
-class ChangeNotifierProxyProvider2<T, T2, R extends ChangeNotifier>
+class ChangeNotifierProxyProvider2<T, T2, R extends ChangeNotifier>//R是被通知的对象
     extends ListenableProxyProvider2<T, T2, R> {
   /// Initializes [key] for subclasses.
   ChangeNotifierProxyProvider2({

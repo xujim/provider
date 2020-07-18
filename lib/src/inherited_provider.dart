@@ -50,25 +50,25 @@ typedef StartListening<T> = VoidCallback Function(
 ///  - [DeferredInheritedProvider], a variant of this object where the provided
 ///    object and the created object are two different entity.
 /// TODO：这里inherited和InheritedWidget又有什么区别和联系？
-class InheritedProvider<T> extends SingleChildStatelessWidget {
+class InheritedProvider<T> extends SingleChildStatelessWidget {//首先，这是个widget
   /// Creates a value, then expose it to its descendants.
   ///
   /// The value will be disposed of when [InheritedProvider] is removed from
   /// the widget tree.
   InheritedProvider({
     Key key,
-    Create<T> create,
-    T update(BuildContext context, T value),
-    UpdateShouldNotify<T> updateShouldNotify,
+    Create<T> create,//创建数据
+    T update(BuildContext context, T value),//更新后的数据, value是previous的
+    UpdateShouldNotify<T> updateShouldNotify,//是否要notify依赖自己的所有dependency
     void Function(T value) debugCheckInvalidValueType,
     StartListening<T> startListening,
     Dispose<T> dispose,
-    TransitionBuilder builder,
+    TransitionBuilder builder,//如果提供builder，则用builder创建child
     bool lazy,
-    Widget child,
+    Widget child,//只拥有一个child widget
   })  : _lazy = lazy,
         _builder = builder,
-        _delegate = _CreateInheritedProvider(
+        _delegate = _CreateInheritedProvider(//TODO：这里的provider是干嘛用的？
           create: create,
           update: update,
           updateShouldNotify: updateShouldNotify,
@@ -118,7 +118,7 @@ class InheritedProvider<T> extends SingleChildStatelessWidget {
   }
 
   @override
-  _InheritedProviderElement<T> createElement() {
+  _InheritedProviderElement<T> createElement() {//用来干嘛的？每个widget都需要创建一个element，用于渲染，这是flutter的design
     return _InheritedProviderElement<T>(this);
   }
 
@@ -128,7 +128,7 @@ class InheritedProvider<T> extends SingleChildStatelessWidget {
       _builder != null || child != null,
       '$runtimeType used outside of MultiProvider must specify a child',
     );
-    return _InheritedProviderScope<T>(
+    return _InheritedProviderScope<T>(//此处创建一个inherited widget(_InheritedProviderScope)，通过inherited widget管理内部数据，实现子widget共享
       owner: this,
       child: _builder != null
           ? Builder(
@@ -266,7 +266,7 @@ abstract class InheritedContext<T> extends BuildContext {
   bool get hasValue;
 }
 
-class _InheritedProviderScope<T> extends InheritedWidget {
+class _InheritedProviderScope<T> extends InheritedWidget {//TODO: 用来干嘛的？通过inherited widget的方式管理provider内的数据？
   _InheritedProviderScope({
     this.owner,
     @required Widget child,
@@ -305,7 +305,7 @@ class _InheritedProviderScopeElement<T> extends InheritedElement
   _DelegateState<T, _Delegate<T>> _delegateState;
 
   @override
-  _InheritedProviderScope<T> get widget =>
+  _InheritedProviderScope<T> get widget =>//获取其所管理的widget，对应的就是_InheritedProviderScope
       super.widget as _InheritedProviderScope<T>;
 
   @override
@@ -332,7 +332,7 @@ class _InheritedProviderScopeElement<T> extends InheritedElement
             ..shouldClearSelectors = true;
         });
       }
-      selectorDependency.selectors.add(aspect);
+      selectorDependency.selectors.add(aspect);// TODO:实现了selector的逻辑吗？
       setDependencies(dependent, selectorDependency);
     } else {
       // subscribes to everything
@@ -382,10 +382,10 @@ class _InheritedProviderScopeElement<T> extends InheritedElement
   }
 
   @override
-  void performRebuild() {
+  void performRebuild() {//负责重绘
     if (_firstBuild) {
       _firstBuild = false;
-      _delegateState = widget.owner._delegate.createState()..element = this;
+      _delegateState = widget.owner._delegate.createState()..element = this;//_delegate是InheritedProvider中的
     }
     super.performRebuild();
   }
@@ -541,7 +541,7 @@ abstract class _DelegateState<T, D extends _Delegate<T>> {
   void build(bool isBuildFromExternalSources) {}
 }
 
-class _CreateInheritedProvider<T> extends _Delegate<T> {
+class _CreateInheritedProvider<T> extends _Delegate<T> {//_Delegate是个模仿widget实现的类，其实现了createState，并且有对应的state类
   _CreateInheritedProvider({
     this.create,
     this.update,
@@ -573,7 +573,7 @@ bool debugIsInInheritedProviderUpdate = false;
 bool debugIsInInheritedProviderCreate = false;
 
 class _CreateInheritedProviderState<T>
-    extends _DelegateState<T, _CreateInheritedProvider<T>> {
+    extends _DelegateState<T, _CreateInheritedProvider<T>> {//实现了delegate
   VoidCallback _removeListener;
   bool _didInitValue = false;
   T _value;

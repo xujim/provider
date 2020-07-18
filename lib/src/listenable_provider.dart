@@ -190,7 +190,7 @@ class ListenableProxyProvider2<T, T2, R extends Listenable>
           builder: builder,
           update: (context, previous) => update(
             context,
-            Provider.of(context),
+            Provider.of(context),//通过provider的方式获取 T,T2
             Provider.of(context),
             previous,
           ),
