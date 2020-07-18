@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_shopper/common/theme.dart';
+import 'package:provider_shopper/events/CartEvent.dart';
 import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
 import 'package:provider_shopper/screens/cart.dart';
@@ -23,14 +24,17 @@ class MyApp extends StatelessWidget {
         // In this sample app, CatalogModel never changes, so a simple Provider
         // is sufficient.
         Provider(create: (context) => CatalogModel()),
+        Provider(create: (context) => CartModel.empty()),
+        ChangeNotifierProvider<CartEvent>(create: (context) => CartEvent() ),
         // CartModel is implemented as a ChangeNotifier, which calls for the use
         // of ChangeNotifierProvider. Moreover, CartModel depends
         // on CatalogModel, so a ProxyProvider is needed.
-        ChangeNotifierProxyProvider<CatalogModel, CartModel>(
-          create: (context) => CartModel.empty(),
-          update: (context, catalog, previousCart) =>
-              CartModel(catalog, previousCart),
-        ),
+
+        // ChangeNotifierProxyProvider<CatalogModel, CartModel>(
+        //   create: (context) => CartModel.empty(),
+        //   update: (context, catalog, previousCart) =>
+        //       CartModel(catalog, previousCart),
+        // ),
       ],
       child: MaterialApp(
         title: 'Provider Demo',

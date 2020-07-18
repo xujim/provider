@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_shopper/events/CartEvent.dart';
 import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
 
@@ -32,10 +33,11 @@ class _AddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cartvent = Provider.of<CartEvent>(context);//全局一个购物车
     var cart = Provider.of<CartModel>(context);
 
     return FlatButton(
-      onPressed: cart.items.contains(item) ? null : () => cart.add(item),
+      onPressed: () => cartvent.sendEvent(context, 0, item),
       splashColor: Theme.of(context).primaryColor,
       child: cart.items.contains(item)
           ? Icon(Icons.check, semanticLabel: 'ADDED')
